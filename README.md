@@ -23,17 +23,17 @@ Servers commonly contain multiple Python installations. Each Python environment 
 ### The steps of this deployment are:
 
 - [Install the Configurable HTTP Proxy](#install-the-configurable-http-proxy)
-    - We will install the Configurable HTTP Proxy, which will serve as an endpoint for the JupyterHub installation.
+    - You will install the Configurable HTTP Proxy, which will serve as an endpoint for the JupyterHub installation.
 - [Install the `conda` Package Manager](#install-the-conda-package-manager)
-    - We will install `conda` into `/opt/conda` in order to manage our JupyterHub environment and default user environment. 
+    - You will install `conda` into `/opt/conda` in order to manage our JupyterHub environment and default user environment. 
 - [Create a `conda` Environment for JupyterHub and Install JupyterHub](#create-a-conda-environment-for-jupyterhub-and-install-jupyterhub)
-    - We will create a `conda` environment specifically for JupyterHub and install JupyterHub into it.
+    - You will create a `conda` environment specifically for JupyterHub and install JupyterHub into it.
 - [Create a Default `conda` Environment for JupyterLab Users](#create-a-default-conda-environment-for-jupyerlab-users)
-    - We will create a default environment that JupyterLab users can use in order to run Notebooks.  We will make it available to JupyterLab.
+    - You will create a default environment that JupyterLab users can use in order to run Notebooks.  You will make it available to JupyterLab.
 - [Make the jupyterhub_default Environment and its Kernel Available to JupyterLab](#make-the-jupyterhub_default-environment-and-its-kernel-available-to-jupyterlab)
-    - We will make the `jupyterhub_default` environment available to JupyterLab.
+    - You will make the `jupyterhub_default` environment available to JupyterLab.
 - [Configure JupyterHub](#configure-jupyterhub)
-    - We will configure JupyterHub.
+    - You will configure JupyterHub.
 - Configure `systemd` to manage the JupyterHub deployment and Start JupyterHub.
 - Create any number of user environments and make them available to the JupyterHub instance.
 
@@ -60,7 +60,7 @@ sudo npm install -g configurable-http-proxy
 
 ##  Install the `conda` Package Manager
 
-We will use `conda` in order to create and manage our JupyterHub deployment and create additional environments for use in JupyterLab. `conda` will be used in order to create and manage a default environment that will be made available to users of JupyterLab.  Likewise, users *may* use `conda` in order to manage their custom environments.
+You will use `conda` in order to create and manage our JupyterHub deployment and create additional environments for use in JupyterLab. `conda` will be used in order to create and manage a default environment that will be made available to users of JupyterLab.  Likewise, users *may* use `conda` in order to manage their custom environments.
 
 Instructions for installing conda using a RPM or Debian package manager are described in [RPM and Debian Repositories for Miniconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/rpm-debian.html).
 
@@ -88,7 +88,7 @@ sudo apt install conda
 
 ## Create a `conda` Environment for JupyterHub and Install JupyterHub
 
-We will use `conda` in order to create a new environment for JupyterHub in `/opt/jupyterhub` and install JupyterHub and JupyterLab into the environment.  This environment will be created and managed by the root account.  Because `/opt/jupyterhub` is not a default path that `conda` searches for environments, this environment is hidden from users i.e., it won't show up in `conda env list`.
+You will use `conda` in order to create a new environment for JupyterHub in `/opt/jupyterhub` and install JupyterHub and JupyterLab into the environment.  This environment will be created and managed by the root account.  Because `/opt/jupyterhub` is not a default path that `conda` searches for environments, this environment is hidden from users i.e., it won't show up in `conda env list`.
 
 ```bash
 sudo /opt/conda/condabin/conda create --prefix /opt/jupyterhub python=3.8 jupyterhub jupyterlab ipykernel
@@ -118,7 +118,7 @@ This environment will serve as a default environment available to all users of J
 
 ## Make the jupyterhub_default Environment and its Kernel Available to JupyterLab
 
-The kernels that are provided on the Launcher Panel and that can be selected in JupyterLab are defined in [Kernel spec *directories*](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs).  For our configuration the following Kernel spec directories will be searched when JupyterLab starts:
+The kernels that are provided on the Launcher Panel and that can be selected in JupyterLab are defined in [Kernel spec *directories*](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs).  For this configuration the following kernel spec directories will be searched when JupyterLab starts:
 
 |Priority|Type|Locations|
 |---|---|---|
@@ -126,7 +126,7 @@ The kernels that are provided on the Launcher Panel and that can be selected in 
 |2|JupyterHub Environment|/opt/jupyterhub/share/jupyter/kernels|
 |3|User Defined|~/.local/share/jupyter/kernels|
 
-A Kernel spec is named according to the name its *directory* that may reside in one of more of the directories in the table above.  A Kernel spec is defined in a JSON file, named kernel.json, that may look something like this:
+A kernel spec is named according to the name of its *directory*, which may reside in one of more of the directories in the table above.  A kernel spec is defined in a JSON file, named kernel.json, that may look something like this:
 
 ```json
 {
@@ -144,10 +144,10 @@ A Kernel spec is named according to the name its *directory* that may reside in 
  }
 }
 ```
-Kernel specs that have the same directory name and that have a higher priority take precedence over lower priority Kernel specs of the same name.  Hence, if two kernel specs are given in `/usr/share/jupyter/kernels/python3` and `/opt/jupyterhub/share/jupyter/kernels/python3` then the latter will override the former.
+Kernel specs that have the same directory name and that have a higher priority take precedence over lower priority kernel specs of the same name.  Hence, if two kernel specs are given in `/usr/share/jupyter/kernels/python3` and `/opt/jupyterhub/share/jupyter/kernels/python3` then the latter will override the former.
 
-When you installed JupyterHub and ipykernel, a kernel spec should have been installed in `/opt/jupyterhub/share/jupyter/kernels/python3`.  By default this kernel spec points to the kernel installed in its environment.  However, you want for the `jupyterhub_default` kernel to be offered to users instead of the jupyterhub kernel.  Hence, change the first element of the `argv` setting to point to the `jupyterhub_default` kernel by changing the value to `/opt/conda/envs/jupyterhub_default/bin/python`.
+When you installed JupyterHub and ipykernel, a kernel spec should have been installed in `/opt/jupyterhub/share/jupyter/kernels/python3`.  By default this kernel spec points to the kernel installed in its environment.  However, you want for the `jupyterhub_default` kernel to be offered to users instead of the `jupyterhub` kernel.  Hence, change the first element of the `argv` setting to point to the `jupyterhub_default` kernel by changing the value to `/opt/conda/envs/jupyterhub_default/bin/python`.
 
-Depending on your environment you may need to remove kernel specs contained in one or more of the other kernel spec locations.
+Depending on your environment you may need to remove or override kernel specs contained in one or more of the other kernel spec locations in order to prevent JupyterLab from offering them to your users.  If you are seeing kernel specs in the Launcher Panel that shouldn't be there, examine each of the kernel spec locations in order to address the issue appropriate to your specific circumstances.
 
 
