@@ -1,6 +1,6 @@
 # Simple JupyterHub Deployment
 
-This document gives instructions for how to deploy JupyterHub and JupyterLab in a "bare metal" or VPS multiuser server environment.  These step by step instuctions are intended to help the administrator understand how the deployment works.  
+This document gives instructions for how to deploy JupyterHub and JupyterLab in a "bare metal" or VPS multiuser server environment.  These step by step instuctions are intended to help the administrator understand how the deployment works and how the components work together.  
 
 These instructions are adapted from [Install JupyterHub and JupyterLab from the ground up](https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/abe84bfb4418c00e08effd1486e2b666fb803ac8/docs/installation-guide-hard.md).
 
@@ -8,7 +8,11 @@ These instructions are adapted from [Install JupyterHub and JupyterLab from the 
 
 - Basic understanding of networking and the command line interface.
 - `sudo` access to a server or VPS.
-- Ubuntu 18.04.1 LTS.  The instructions assume you are working from an Ubuntu system; however, they may be adapted to other Linux distributions or Windows given a sufficient understanding of package management.
+- Ubuntu 18.04.1 LTS.  The instructions assume you are working from an Ubuntu system; however, you may be able to adapt the instructions to other Linux distributions given a sufficient understanding of package management.
+
+## Assumptions
+
+The instructions in this document assume common and reasonable server environments.
 
 ## Goals
 
