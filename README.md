@@ -6,7 +6,7 @@ These instructions are adapted from [Install JupyterHub and JupyterLab from the 
 
 ## Requirements
 
-- Basic understanding of networking and the command line interface.
+- Basic understanding of networking, the command line interface, working with configuration files, and `systemd` services.
 - `sudo` access to a server or VPS.
 - Ubuntu 18.04.1 LTS.  The instructions assume you are working from an Ubuntu system; however, you may be able to adapt the instructions to other Linux distributions given a sufficient understanding of package management.
 
@@ -18,18 +18,23 @@ The instructions in this document assume common and reasonable server environmen
 
 These instructions will describe how to deploy a JupyterHub instance that is managed by `systemd` and contained in a `conda` environment.  
 
-Server environments commonly contain multiple Python installations. Each environment serves a particular purpose.  Hence, one of the primary goals of this deployment is for JupyterHub to be installed in a `conda` environment separate from other environments on the system.  This approach will help ensure the stability of the deployment.  Likewise, using `conda`, or another environment manger, each user will be able to configure their own environment to meet their specific needs.
+Servers commonly contain multiple Python installations. Each Python environment may serve a particular purpose.  Hence, one of the primary goals of this deployment is for JupyterHub to be installed in a `conda` environment separate from other environments on the system.  This approach will help ensure the stability of the deployment.  Likewise, using `conda`, or another environment manger, each user will be able to configure their own environment to meet their specific needs.
 
 ### The steps of this deployment are:
 
 - [Install the Configurable HTTP Proxy](#install-the-configurable-http-proxy)
     - We will install the Configurable HTTP Proxy, which will serve as an endpoint for the JupyterHub installation.
-- Install `conda`
+- [Install the `conda` Package Manager](#install-the-conda-package-manager)
     - We will install `conda` into `/opt/conda` in order to manage our JupyterHub environment and default user environment. 
-- Install a JupyterHub instance into a `conda` managed environment and configure the JupyterHub instance.
-- Create a default `conda` environment for users that will be made available to the JupyterHub instance.
-- Configure the Kernel spec of the JupyterHub instance to use the default environment.
-- Configure `systemd` to manage the JupyterHub deployment.
+- [Create a `conda` Environment for JupyterHub and Install JupyterHub](#create-a-conda-environment-for-jupyterhub-and-install-jupyterhub)
+    - We will create a `conda` environment specifically for JupyterHub and install JupyterHub into it.
+- [Create a Default `conda` Environment for JupyterLab Users](#create-a-default-conda-environment-for-jupyerlab-users)
+    - We will create a default environment that JupyterLab users can use in order to run Notebooks.  We will make it available to JupyterLab.
+- [Make the jupyterhub_default Environment and its Kernel Available to JupyterLab](#make-the-jupyterhub_default-environment-and-its-kernel-available-to-jupyterlab)
+    - We will make the `jupyterhub_default` environment available to JupyterLab.
+- [Configure JupyterHub](#configure-jupyterhub)
+    - We will configure JupyterHub.
+- Configure `systemd` to manage the JupyterHub deployment and Start JupyterHub.
 - Create any number of user environments and make them available to the JupyterHub instance.
 
 ## Install the Configurable HTTP Proxy
@@ -53,7 +58,7 @@ Install `configurable-http-proxy`:
 sudo npm install -g configurable-http-proxy
 ```
 
-##  Install `conda`
+##  Install the `conda` Package Manager
 
 We will use `conda` in order to create and manage our JupyterHub deployment and create additional environments for use in JupyterLab. `conda` will be used in order to create and manage a default environment that will be made available to users of JupyterLab.  Likewise, users *may* use `conda` in order to manage their custom environments.
 
@@ -109,7 +114,7 @@ This environment can be managed by using the `sudo /opt/conda/condabin/conda ins
 sudo /opt/conda/condabin/conda install -n jupyterhub_default the-name-of-the-package
 ```
 
-This environment is just a default environment that any user can use.  Instructions for creating user specified environments will be provided in a following section.
+This environment will serve as a default environment available to all users of JupyterLab.  Instructions for creating user specified environments will be provided in a following section.
 
 ## Make the jupyterhub_default Environment and its Kernel Available to JupyterLab
 
