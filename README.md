@@ -118,4 +118,36 @@ This environment will serve as a default environment available to all users of J
 
 ## Make the jupyterhub_default Environment and its Kernel Available to JupyterLab
 
-The kernels that are provided on the Launcher Panel in JupyterLab are defined in [Kernel spec directories](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs).  
+The kernels that are provided on the Launcher Panel and that can be selected in JupyterLab are defined in [Kernel spec *directories*](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs).  For our configuration the following Kernel spec directories will be searched when JupyterLab starts:
+
+|Priority|Type|Locations|
+|---|---|---|
+|1|System|/usr/share/jupyter/kernels</br>/usr/local/share/jupyter/kernels|
+|2|JupyterHub Environment|/opt/jupyterhub/share/jupyter/kernels|
+|3|User Defined|~/.local/share/jupyter/kernels|
+
+A Kernel spec is named according to the name its *directory* that may reside in one of more of the directories in the table above.  A Kernel spec is defined in a JSON file, named kernel.json, that may look something like this:
+
+```json
+{
+ "argv": [
+  "/opt/conda/envs/jupyterhub_default/bin/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "Python 3 Default (ipykernel)",
+ "language": "python",
+ "metadata": {
+  "debugger": true
+ }
+}
+```
+Kernel specs that have the same directory name and that have a higher priority take precedence over lower priority Kernel specs of the same name.  Hence, if two kernel specs are given in `/usr/share/jupyter/kernels/python3` and `/opt/jupyterhub/share/jupyter/kernels/python3` then the latter will override the former.
+
+When you installed JupyterHub and ipykernel, a kernel spec should have been installed in `/opt/jupyterhub/share/jupyter/kernels/python3`.  By default this kernel spec points to the kernel installed in its environment.  However, you want for the `jupyterhub_default` kernel to be offered to users instead of the jupyterhub kernel.  Hence, change the first element of the `argv` setting to point to the `jupyterhub_default` kernel by changing the value to `/opt/conda/envs/jupyterhub_default/bin/python`.
+
+Depending on your environment you may need to remove kernel specs contained in one or more of the other kernel spec locations.
+
+
