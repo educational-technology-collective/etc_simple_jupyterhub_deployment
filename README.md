@@ -148,6 +148,5 @@ Kernel specs that have the same directory name and that have a higher priority t
 
 When you installed JupyterHub and ipykernel, a kernel spec should have been installed in `/opt/jupyterhub/share/jupyter/kernels/python3`.  By default this kernel spec points to the kernel installed in its environment.  However, you want for the `jupyterhub_default` kernel to be offered to users instead of the `jupyterhub` kernel.  Hence, change the first element of the `argv` setting to point to the `jupyterhub_default` kernel by changing the value to `/opt/conda/envs/jupyterhub_default/bin/python`.
 
-Depending on your environment you may need to remove or override kernel specs contained in one or more of the other kernel spec locations in order to prevent JupyterLab from offering them to your users.  If you are seeing kernel specs in the Launcher Panel that shouldn't be there, examine each of the kernel spec locations in order to address the issue appropriate to your specific circumstances.
-
+Depending on your environment you may need to remove or override kernel specs contained in one or more of the other kernel spec locations in order to prevent JupyterLab from offering them to your users.  If you are seeing kernel specs in the Launcher Panel that shouldn't be there, examine each of the kernel spec locations in order to address the issue in a way that is appropriate to your specific circumstances.
 
