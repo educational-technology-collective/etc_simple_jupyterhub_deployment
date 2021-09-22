@@ -295,8 +295,8 @@ The easiest way for an user to make an environment visible to JupyterLab is to i
 # Activate the environment.
 conda activate the-name-of-the-environment
 # Create the kernel spec.
-python -m ipykernel install --user --name 'the-name-of-kernel-spec' --display-name "The Display Name"
+python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --display-name "The Display Name"
 ```
 
-The value of the `--name` parameter specifies the name of the kernel spec in `~/.local/share/jupyter/kernels`.  The value of the `--display-name` parameter specifies the name that is displayed in JupyterLab.
+The value of the `--name` parameter specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  The value of the `--display-name` parameter specifies the name that is displayed in JupyterLab.
 
