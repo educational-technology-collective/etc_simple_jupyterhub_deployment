@@ -287,7 +287,7 @@ JupyterHub should be accessible at the endpoint specified by the `c.JupyterHub.b
 
 ## Make User Installed Python Environments Available to JupyterHub
 
-The easiest way for an user to make an environment visible to JupyterLab is to install install `ipykernel` into the environment and then use `ipykernel` in order to create the kernel spec.  The kernel spec will be created in `~/.local/share/jupyter/kernels`; this is one of the paths that JupyterLab searches for kernel specs.
+The easiest way for an user to make an environment visible to JupyterLab is to install `ipykernel` into the environment and then use `ipykernel` in order to create the kernel spec.  The kernel spec will be created in `~/.local/share/jupyter/kernels`; this is one of the paths that JupyterLab searches for kernel specs.
 
 ### Make a kernel visible to JupyterLab.
 
