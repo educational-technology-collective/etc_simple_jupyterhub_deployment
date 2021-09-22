@@ -291,7 +291,7 @@ sudo systemctl start jupyterhub.service
 sudo systemctl status jupyterhub.service
 ```
 
-JupyterHub should be accessible at the endpoint specified by the `c.JupyterHub.bind_url` setting in the configuration file.
+JupyterHub should be accessible at the endpoint specified by the `c.JupyterHub.bind_url` setting in the configuration file e.g., `https://127.0.0.1:8443/jupyter`.
 
 ## Make User Installed Python Environments Available to JupyterHub
 
