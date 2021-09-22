@@ -31,7 +31,7 @@ Servers commonly contain multiple Python installations. Each Python environment 
     - You will install `conda` into `/opt/conda` in order to manage our JupyterHub environment and default user environment. 
 - [Create a `conda` Environment for JupyterHub and Install JupyterHub](#create-a-conda-environment-for-jupyterhub-and-install-jupyterhub)
     - You will create a `conda` environment specifically for JupyterHub and install JupyterHub into it.
-- [Create a Default `conda` Environment for JupyterLab Users](#create-a-default-conda-environment-for-jupyerlab-users)
+- [Create a Default `conda` Environment for JupyterLab Users](#create-a-default-conda-environment-for-jupyterlab-users)
     - You will create a default environment that JupyterLab users can use in order to run Notebooks.  You will make it available to JupyterLab.
 - [Configure JupyterHub](#configure-jupyterhub)
     - You will configure JupyterHub.
