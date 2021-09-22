@@ -165,6 +165,7 @@ sudo nano /opt/jupyterhub/share/jupyter/kernels/python3/kernel.json
 
 The modified kernel.json should look like this.
 ```json
+
 {
  "argv": [
   "/opt/conda/envs/jupyterhub_default/bin/python",
@@ -179,7 +180,6 @@ The modified kernel.json should look like this.
   "debugger": true
  }
 }
-
 ```
 
 Depending on your environment you may need to remove or override kernel specs contained in one or more of the other kernel spec locations in order to prevent JupyterLab from offering them to your users.  If you are seeing kernel specs in the Launcher Panel that shouldn't be there, examine each of the kernel spec locations in order to address the issue in a way that is appropriate to your specific circumstances.
