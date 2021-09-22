@@ -299,6 +299,6 @@ python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --displa
 ```
 
 The `--user` argument specifies that the kernel spec should be installed for the current user.
-The value of the `--name` argument specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  
-The value of the `--display-name` argument specifies the name that is displayed in JupyterLab.
+The `--name` argument specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  
+The `--display-name` argument specifies the name that is displayed in JupyterLab.
 
