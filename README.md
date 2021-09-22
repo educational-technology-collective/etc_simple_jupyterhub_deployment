@@ -298,7 +298,7 @@ conda activate the-name-of-the-environment
 python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --display-name "The Display Name"
 ```
 
-The `--user` parameter specifies that the kernel spec should be installed for the current user.
-The value of the `--name` parameter specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  
-The value of the `--display-name` parameter specifies the name that is displayed in JupyterLab.
+The `--user` argument specifies that the kernel spec should be installed for the current user.
+The value of the `--name` argument specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  
+The value of the `--display-name` argument specifies the name that is displayed in JupyterLab.
 
