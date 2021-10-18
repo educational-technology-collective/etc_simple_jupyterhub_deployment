@@ -293,15 +293,19 @@ sudo systemctl status jupyterhub.service
 
 JupyterHub should be accessible at the endpoint specified by the `c.JupyterHub.bind_url` setting in the configuration file e.g., `https://127.0.0.1:8443/jupyter`.
 
-## Make User Installed Python Environments Available to JupyterHub
+## Make User Installed Python Environments Available to JupyterLab.
 
-The easiest way for an user to make an environment visible to JupyterLab is to install `ipykernel` into the environment and then use `ipykernel` in order to create the kernel spec.  The kernel spec will be created in `~/.local/share/jupyter/kernels`; this is one of the paths that JupyterLab searches for kernel specs.
+JupyterLab uses "kernel spec" files in order to find Python kernels that the user wants to make available to JupyterLab.  A kernel spec is a JSON file that provides the information that JupyterLab needs in order to start a kernel.  Additionally, it provides the display name in JupyterLab.  JupyterLab searches specific [locations](https://jupyter-client.readthedocs.io/en/latest/kernels.html#kernelspecs) for kernel spec files.  
 
-### Make a kernel visible to JupyterLab.
+The easiest way for an user to create a kernel spec and make an environment visible to JupyterLab is to install the [`ipykernel`](https://pypi.org/project/ipykernel/) package into the environment and then use `ipykernel` in order to create the kernel spec.  The kernel spec will be created in `~/.local/share/jupyter/kernels`; this is one of the paths that JupyterLab searches for kernel specs.
+
+### Make a Python kernel in a Conda environment visible to JupyterLab.
 
 ```bash
 # Activate the environment.
 conda activate the-name-of-the-environment
+# Install the ipykernel package if it isn't installed already.
+conda install -c conda-forge ipykernel
 # Create the kernel spec.
 python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --display-name "The Display Name"
 ```
