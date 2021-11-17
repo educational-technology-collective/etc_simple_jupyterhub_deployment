@@ -28,7 +28,7 @@ Servers commonly contain multiple Python installations. Each Python environment 
 - [Install the Configurable HTTP Proxy](#install-the-configurable-http-proxy)
     - You will install the Configurable HTTP Proxy, which will serve as an endpoint for the JupyterHub installation.
 - [Install the `conda` Package Manager](#install-the-conda-package-manager)
-    - You will install `conda` into `/opt/conda` in order to manage our JupyterHub environment and default user environment. 
+    - You will install `conda` into `/opt/conda` in order to manage the JupyterHub environment and default user environment. 
 - [Create a `conda` Environment for JupyterHub and Install JupyterHub](#create-a-conda-environment-for-jupyterhub-and-install-jupyterhub)
     - You will create a `conda` environment specifically for JupyterHub and install JupyterHub into it.
 - [Create a Default `conda` Environment for JupyterLab Users](#create-a-default-conda-environment-for-jupyterlab-users)
@@ -39,15 +39,19 @@ Servers commonly contain multiple Python installations. Each Python environment 
     - You will configure `systemd` to manage the JupyterHub deployment and start JupyterHub.
 - [Make User Installed Python Environments Available to JupyterLab](#make-user-installed-python-environments-available-to-jupyterhub)
     - You will learn how to install and configure kernel specs in order to make environments installed by users visible to JupyterLab.
+- [Install a user extension for JupyterLab.](#install-a-user-extension-for-jupyterlab)
+    - You will learn how a user can install a JupyterLab extension that will be activated for the user.
+- [Install a JupyterLab extension for all users of the JupyterHub.](#install-a-jupyterlab-extension-for-all-users-of-the-jupyterhub)
+    - You will learn how to install a JupyterLab extension that will be activated for all users of the JupyterHub. 
 
 ## Install the Configurable HTTP Proxy
 
 JupyterHub is composed of 3 major subsystems: [the Hub, the Proxy, and Single-User Notebook Servers](https://jupyterhub.readthedocs.io/en/stable/reference/technical-overview.html#the-subsystems-hub-proxy-single-user-notebook-server).  JupyterHub starts a Configurable HTTP Proxy when it starts.  It serves two primary functions: 
 
-- It forwards requests to JupyterHub e.g., it acts as an endpoint.
+- It forwards requests to JupyterHub i.e., it acts as an endpoint.
 - When JupyterHub spawns a new Single User Notebook Server, it permits JupyterHub to configure it in order to forward url prefixes to the newly spawned server.
 
-Furthermore, having the proxy act as an endpoint, JupyterHub can be restarted without interrupting connections between users and their already spawned Notebook servers.
+Furthermore, having the proxy act as an endpoint, JupyterHub can be restarted without interrupting connections between users and their already spawned Notebook servers; the proxy will continue to forward requests to JupyterLab instances while JupyterHub is restarting.
 
 ### Install `nodejs` and `npm`.
 
@@ -76,14 +80,14 @@ The following instuctions are adpated from [RPM and Debian Repositories for Mini
 ### Install `conda`.
 
 ```bash
-# Install our public GPG key to trusted store.
+# Install the public GPG key to trusted store.
 curl https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc | gpg --dearmor > conda.gpg
 install -o root -g root -m 644 conda.gpg /usr/share/keyrings/conda-archive-keyring.gpg
 
 # Check whether fingerprint is correct (will output an error message otherwise).
 gpg --keyring /usr/share/keyrings/conda-archive-keyring.gpg --no-default-keyring --fingerprint 34161F5BF5EB1D4BFBBB8F0A8AEB4F8B29D82806
 
-# Add our Debian repo.
+# Add the Debian repo.
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/conda-archive-keyring.gpg] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main" | sudo tee -a /etc/apt/sources.list.d/conda.list
 
 # Make the newly added repository available to `apt`.
@@ -314,3 +318,38 @@ python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --displa
 - The `--name` argument specifies the name of the kernel spec that will be saved to `~/.local/share/jupyter/kernels`.  
 - The `--display-name` argument specifies the name that is displayed in JupyterLab.
 
+## Install a user extension for JupyterLab.
+
+Users can install JupyterLab extensions that will be activated in the users' JupyterLab instance.  User installed extensions will not be activated in the JupyterLab instances of other users.  
+
+Each new instance of JupyterLab is launched from the `/opt/jupyterhub` conda environment.  This environment is managed by root and is not user writable.  However, a user can use this environment in order to install a user extension.  These commands should be ran as the user - **not root**.
+
+### Install an extension from PyPI.
+
+```bash
+/opt/jupyterhub/bin/pip install the-name-of-the-extension
+```
+
+### Install an extension from a wheel file.
+
+```bash
+/opt/jupyterhub/bin/pip install the-name-of-the-extension.whl
+```
+
+Because the `/opt/jupyterhub` environment is not writable by the user, the command will install the specified extension into the user's `~/.local/share/jupyter/labextensions` directory.  When JupyterLab launches it will search this directory for user installed extensions.
+
+## Install a JupyterLab extension for all users of the JupyterHub.
+
+Extensions can be installed that will be activated for all users.  Each JupyterLab instance is launched from the `/opt/jupyterhub` environment.  Hence, in order to install an extension that will be activated for all users, the extension should be installed into that environment.  Because the `/opt/jupyterhub` environment is only writable by root, these extensions must be installed by root.
+
+### Install an extension from PyPI.
+
+```bash
+sudo /opt/jupyterhub/bin/pip install the-name-of-the-extension
+```
+
+### Install an extension from a wheel file.
+
+```bash
+sudo /opt/jupyterhub/bin/pip install the-name-of-the-extension.whl
+```
