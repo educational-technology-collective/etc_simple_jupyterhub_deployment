@@ -320,7 +320,7 @@ python -m ipykernel install --user --name 'the-name-of-the-kernel-spec' --displa
 
 ## Install a user extension for JupyterLab.
 
-Users can install JupyterLab extensions that will be activated in the users' JupyterLab instance.  User installed extensions will not be activated in the JupyterLab instances of other users.  
+A user can install a JupyterLab extension that will be activated in the user's JupyterLab instance.  User installed extensions will not be activated in the JupyterLab instances of other users.  
 
 Each new instance of JupyterLab is launched from the `/opt/jupyterhub` conda environment.  This environment is managed by root and is not user writable.  However, a user can use this environment in order to install a user extension.  These commands should be ran as the user - **not root**.
 
@@ -340,7 +340,7 @@ Because the `/opt/jupyterhub` environment is not writable by the user, the comma
 
 ## Install a JupyterLab extension for all users of the JupyterHub.
 
-Extensions can be installed that will be activated for all users.  Each JupyterLab instance is launched from the `/opt/jupyterhub` environment.  Hence, in order to install an extension that will be activated for all users, the extension should be installed into that environment.  Because the `/opt/jupyterhub` environment is only writable by root, these extensions must be installed by root.
+An extensions can be installed that will be activated for all users.  Each JupyterLab instance is launched from the `/opt/jupyterhub` environment.  Hence, in order to install an extension that will be activated for all users, the extension should be installed into that environment.  Because the `/opt/jupyterhub` environment is only writable by root, the extension must be installed by root.
 
 ### Install an extension from PyPI.
 
