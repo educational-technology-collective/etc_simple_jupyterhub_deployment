@@ -37,7 +37,7 @@ Servers commonly contain multiple Python installations. Each Python environment 
     - You will configure JupyterHub.
 - [Configure a `systemd` Service for JupyterHub](#configure-a-systemd-service-for-jupyterhub)
     - You will configure `systemd` to manage the JupyterHub deployment and start JupyterHub.
-- [Make User Installed Python Environments Available to JupyterLab](#make-user-installed-python-environments-available-to-jupyterhub)
+- [Make User Installed Python Environments Available to JupyterLab](#make-user-installed-python-environments-available-to-jupyterlab)
     - You will learn how to install and configure kernel specs in order to make environments installed by users visible to JupyterLab.
 - [Install a user extension for JupyterLab.](#install-a-user-extension-for-jupyterlab)
     - You will learn how a user can install a JupyterLab extension that will be activated for the user.
