@@ -327,16 +327,16 @@ Each new instance of JupyterLab is launched from the `/opt/jupyterhub` conda env
 ### Install an extension from PyPI.
 
 ```bash
-/opt/jupyterhub/bin/pip install the-name-of-the-extension
+/opt/jupyterhub/bin/pip install --user --force-reinstall the-name-of-the-extension
 ```
 
 ### Install an extension from a wheel file.
 
 ```bash
-/opt/jupyterhub/bin/pip install the-name-of-the-extension.whl
+/opt/jupyterhub/bin/pip install --user --force-reinstall the-name-of-the-extension.whl
 ```
 
-Because the `/opt/jupyterhub` environment is not writable by the user, the command will install the specified extension into the user's `~/.local/share/jupyter/labextensions` directory.  When JupyterLab launches it will search this directory for user installed extensions.
+Pip will install the specified extension into the user's `~/.local/share/jupyter/labextensions` directory.  When JupyterLab launches it will search this directory for user installed extensions.
 
 ## Install a JupyterLab extension for all users of the JupyterHub.
 
