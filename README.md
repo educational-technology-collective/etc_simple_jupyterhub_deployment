@@ -303,6 +303,16 @@ JupyterLab uses "kernel spec" files in order to find Python kernels that the use
 
 The easiest way for an user to create a kernel spec and make an environment visible to JupyterLab is to install the [`ipykernel`](https://pypi.org/project/ipykernel/) package into the environment and then use `ipykernel` in order to create the kernel spec.  The kernel spec will be created in `~/.local/share/jupyter/kernels`; this is one of the paths that JupyterLab searches for kernel specs.
 
+## Make a System Wide Python Environment Available to JupyterLab
+
+(Chris notes) To make a new virtual environment available to all of the system users do the following:
+
+```
+sudo /opt/conda/bin/conda create --prefix /opt/conda/envs/transfer ipykernel
+conda activate /opt/conda/envs/transfer
+sudo /opt/conda/envs/transfer/bin/python -m ipykernel install --name 'transfer' --display-name "LEVI Transfer Env"
+```
+
 ### Make a Python kernel in a Conda environment visible to JupyterLab.
 
 ```bash
